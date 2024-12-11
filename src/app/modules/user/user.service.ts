@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import jwt from 'jsonwebtoken'
 import config from '../../config'
 import { User } from './user.model'
