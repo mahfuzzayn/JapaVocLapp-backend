@@ -9,6 +9,12 @@ const generateToken = (id: string) => {
     return jwt.sign({ id }, config.jwt_secret!, { expiresIn: '30d' })
 }
 
+const getAllUsersFromDB = async () => {
+    const result = await User.find()
+
+    return result
+}
+
 const registerUserIntoDB = async (payload: TUser) => {
     const { name, email, password, photoUrl } = payload
 
@@ -50,7 +56,21 @@ const loginUserFromDB = async (payload: Partial<TUser>) => {
     }
 }
 
+const updateUserRoleIntoDB = async (id: string, payload: Partial<TUser>) => {
+    const existingUser = await User.findById(id)
+
+    if (!existingUser) {
+        throw new Error('Invalid user id')
+    }
+
+    const result = await User.updateOne({ _id: id }, payload)
+
+    return result
+}
+
 export const UserServices = {
+    getAllUsersFromDB,
     registerUserIntoDB,
     loginUserFromDB,
+    updateUserRoleIntoDB,
 }
