@@ -6,7 +6,7 @@ const lessonSchema = new Schema<TLesson>({
         type: String,
         required: true,
     },
-    number: {
+    lessonNumber: {
         type: Number,
         required: true,
     },

@@ -3,7 +3,7 @@ import { LessonControllers } from './lesson.controller'
 
 const router = express.Router()
 
-router.get('/', LessonControllers.getAllLesson)
+router.get('/', LessonControllers.getAllLessons)
 
 router.post('/create-lesson', LessonControllers.createLesson)
 

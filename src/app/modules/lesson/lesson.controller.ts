@@ -19,7 +19,7 @@ const createLesson = async (req: Request, res: Response) => {
     }
 }
 
-const getAllLesson = async (req: Request, res: Response) => {
+const getAllLessons = async (req: Request, res: Response) => {
     try {
         const result = await LessonServices.getAllLessonsFromDB()
 
@@ -60,8 +60,29 @@ const updateLesson = async (req: Request, res: Response) => {
     }
 }
 
+const deleteLesson = async (req: Request, res: Response) => {
+    const { lessonId } = req.params
+
+    try {
+        const result = await LessonServices.deleteLessonFromDB(lessonId)
+
+        res.status(200).json({
+            success: true,
+            message: 'Lesson deleted successfully',
+            data: result,
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete lesson',
+            error: error,
+        })
+    }
+}
+
 export const LessonControllers = {
     createLesson,
-    getAllLesson,
+    getAllLessons,
     updateLesson,
+    deleteLesson,
 }
