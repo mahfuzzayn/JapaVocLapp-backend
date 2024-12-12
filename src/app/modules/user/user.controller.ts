@@ -1,6 +1,12 @@
 import { Request, Response } from 'express'
 import { UserServices } from './user.service'
 
+const verifyUserAuth = (req: Request, res: Response) => {
+    res.status(200).json({
+        valid: true,
+    })
+}
+
 const getAllUsers = async (req: Request, res: Response) => {
     try {
         const result = await UserServices.getAllUsersFromDB()
@@ -76,6 +82,7 @@ const updateUserRole = async (req: Request, res: Response) => {
 }
 
 export const UserControllers = {
+    verifyUserAuth,
     getAllUsers,
     registerUser,
     loginUser,

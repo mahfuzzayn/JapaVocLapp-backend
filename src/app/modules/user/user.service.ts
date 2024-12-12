@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import jwt from 'jsonwebtoken'
 import config from '../../config'
 import { User } from './user.model'
 import bcrypt from 'bcrypt'
 import { TUser } from './user.interface'
+import { NextFunction, Request, Response } from 'express'
 
 const generateToken = (id: string) => {
     return jwt.sign({ id }, config.jwt_secret!, { expiresIn: '30d' })
