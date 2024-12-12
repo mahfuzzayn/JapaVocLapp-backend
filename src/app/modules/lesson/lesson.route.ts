@@ -5,10 +5,12 @@ const router = express.Router()
 
 router.get('/', LessonControllers.getAllLessons)
 
+router.get('/:lessonNo', LessonControllers.getSingleLesson)
+
 router.post('/create-lesson', LessonControllers.createLesson)
 
 router.patch('/:lessonId', LessonControllers.updateLesson)
 
-router.delete('/:lessonId', )
+router.delete('/:lessonId', LessonControllers.deleteLesson)
 
 export const LessonRoutes = router;

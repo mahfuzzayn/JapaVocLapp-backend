@@ -35,7 +35,7 @@ const deleteVocabularyFromDB = async (id: string) => {
         throw new Error('Lesson not found')
     }
 
-    const result = await Vocabulary.findByIdAndDelete(id)
+    const result = await Vocabulary.findOneAndDelete({ _id: id })
 
     return result
 }

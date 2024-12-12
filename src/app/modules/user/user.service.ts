@@ -9,7 +9,13 @@ const generateToken = (id: string) => {
 }
 
 const getAllUsersFromDB = async () => {
-    const result = await User.find()
+    const result = await User.aggregate([
+        {
+            $project: {
+                password: 0,
+            },
+        },
+    ])
 
     return result
 }

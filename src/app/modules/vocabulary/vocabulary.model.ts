@@ -7,6 +7,10 @@ const vocabularySchema = new Schema<TVocabulary>(
             type: String,
             require: true,
         },
+        meaning: {
+            type: String,
+            require: true,
+        },
         pronunciation: {
             type: String,
             require: true,

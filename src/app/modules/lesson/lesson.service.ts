@@ -9,9 +9,54 @@ const createLessonIntoDB = async (payload: TLesson) => {
 }
 
 const getAllLessonsFromDB = async () => {
-    const result = await Lesson.find()
+    const result = await Lesson.aggregate([
+        {
+            $lookup: {
+                from: 'vocabularies',
+                localField: 'lessonNumber',
+                foreignField: 'lessonNumber',
+                as: 'vocabularies',
+            },
+        },
+        {
+            $project: {
+                name: 1,
+                lessonNumber: 1,
+                vocabularyCount: { $size: '$vocabularies' },
+            },
+        },
+    ])
 
     return result
+}
+
+const getSingleLessonFromDB = async (lessonNo: string) => {
+    const result = await Lesson.aggregate([
+        {
+            $match: { lessonNumber: parseInt(lessonNo) },
+        },
+        {
+            $lookup: {
+                from: 'vocabularies',
+                localField: 'lessonNumber',
+                foreignField: 'lessonNumber',
+                as: 'vocabularies',
+            },
+        },
+        {
+            $project: {
+                name: 1,
+                lessonNumber: 1,
+                vocabularyCount: { $size: '$vocabularies' },
+                vocabularies: 1,
+            },
+        },
+        {
+            $limit: 1,
+        },
+    ])
+
+    return result[0] || null
 }
 
 const updateLessonIntoDB = async (id: string, payload: Partial<TLesson>) => {
@@ -44,6 +89,7 @@ const deleteLessonFromDB = async (id: string) => {
 
 export const LessonServices = {
     createLessonIntoDB,
+    getSingleLessonFromDB,
     getAllLessonsFromDB,
     updateLessonIntoDB,
     deleteLessonFromDB,

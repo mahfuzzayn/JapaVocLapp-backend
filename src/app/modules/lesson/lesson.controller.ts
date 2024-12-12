@@ -31,6 +31,26 @@ const getAllLessons = async (req: Request, res: Response) => {
     } catch (error) {
         res.status(500).json({
             success: false,
+            message: 'Failed to retrieve lessons',
+            error: error,
+        })
+    }
+}
+
+const getSingleLesson = async (req: Request, res: Response) => {
+    const { lessonNo } = req.params
+
+    try {
+        const result = await LessonServices.getSingleLessonFromDB(lessonNo)
+
+        res.status(200).json({
+            success: true,
+            message: 'Lesson retrieved successfully',
+            data: result,
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
             message: 'Failed to retrieve lesson',
             error: error,
         })
@@ -83,6 +103,7 @@ const deleteLesson = async (req: Request, res: Response) => {
 export const LessonControllers = {
     createLesson,
     getAllLessons,
+    getSingleLesson,
     updateLesson,
     deleteLesson,
 }
